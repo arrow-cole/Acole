@@ -1,12 +1,217 @@
- const background = document.getElementById('background');
+'''
+Silly little python game. Basically dice blackjack. Has an AI that I barely
+understand. Enjoy! :)
+'''
 
-document.addEventListener('mousemove', (e) => {
-    const mouseX = e.clientX / window.innerWidth;
-    const mouseY = e.clientY / window.innerHeight;
+import random
+from subprocess import call
+import os
 
-    const r = Math.floor(255 * mouseX);
-    const g = Math.floor(255 * mouseY);
-    const b = Math.floor(255 * (mouseY + mouseX))
-    const color = `rgb(${r}, ${g}, ${b})`;
-    background.style.backgroundColor = color;
-});
+global hyper
+hyper = False
+
+# Crappy function that clears the console of text to make things nice and clean :)
+def clear():
+    _ = call('clear' if os.name == 'posix' else 'cls')
+
+# Rolling dice
+def roll_dice(player_total, ai_total):
+    advantage_threshold = 6  # Define your threshold for "significant" lead
+
+    if abs(player_total - ai_total) > advantage_threshold:
+        # Introduce a bias towards higher numbers for the player/AI behind
+        return random.randint(4, 6)  # Adjust the range for bias
+
+    return random.randint(1, 6)
+
+# AI logic
+def ai_decision(current_total, target, player_total):
+    global hyper
+    # Adjust this parameter based on the desired AI strategy
+    risk_tolerance = 0.4  # Adjust the risk tolerance for the AI
+    
+    if hyper:
+        risk_tolerance == 0
+        
+        # If AI is substantially ahead, it withdraws
+        if current_total > player_total + 6 or current_total == target:
+            return False
+    
+    remaining_target = target - current_total
+    possible_rolls = 6  # Assuming a six-sided die
+
+    # Calculate the probability of rolling a value that would bring the total closer to the target
+    favorable_outcomes = min(remaining_target, possible_rolls)
+    probability = favorable_outcomes / possible_rolls
+
+    # Make the AI more aggressive and less likely to withdraw if its total is below the player's total
+    if current_total < player_total + 3 and remaining_target > 2:  # Only be aggressive if winning is still possible
+        risk_tolerance -= 0.5  # Adjust this value based on desired behavior
+    
+    # Do not withdraw if the AI's total is very low
+    if current_total <= 5:
+        return True
+    
+    # Do not roll if the AI's total is very close to the target
+    if current_total >= target - 2:
+        return False
+
+    # Adjust the decision based on risk tolerance
+    return random.random() < probability * (1 - risk_tolerance)
+
+# The actual game
+def main():
+    # Setting variables
+    global hyper
+    total = 0
+    ai_total = 0
+    target = 20
+    player_with = False
+    ai_with = False
+    
+    # Main gameplay loop
+    while True:
+        if player_with and ai_with:
+            break
+        
+        # Player's turn
+        clear()
+        print("PLAYER'S TURN")
+        print(f"TARGET: {target}\nYOUR TOTAL: {total}\nAI'S TOTAL: {ai_total}")
+        decide = input("\nRoll another dice? (y/n) ").lower()
+        
+        # Roll logic
+        if decide == "y":
+            clear()
+            if hyper:
+                chance = random.randint(1, 10)
+                roll = roll_dice(total, ai_total)
+                if chance == 1:
+                    roll -= 1
+                if roll < 1:
+                    roll = 1
+            else:
+                roll = roll_dice(total, ai_total)
+            total += roll
+            print(f"You rolled a {roll}!\n")
+            input("\nPress enter to continue.")
+            
+            # Bust logic
+            if total > target:
+                clear()
+                print(f"Bust! You rolled a {roll} and went over {target}!")
+                input("\nPress enter to continue.")
+                break
+        
+        # Withdraw logic
+        elif decide == "n":
+            clear()
+            print(f"Your final total is {total}!")
+            if ai_with != True:
+                print("The AI gets another turn!")
+            input("\nPress enter to continue.")
+            player_with = True
+        
+        elif decide == "bust":
+            total = target ** target ** 2 + target ** target
+            ai_total = target ** target ** 2
+            player_with = True
+            ai_with = True
+        
+        # This doesn't do anything, you can skip your turn and give the AI an aneurysm
+        else:
+            print("\nBAD INPUT!\n")
+        
+        if ai_with == True:
+            break
+        
+        # AI's turn
+        clear()
+        print("AI'S TURN")
+        
+        if ai_decision(ai_total, target, total):
+            if hyper:
+                biased = [6, 6, 6, 6, 5, 5, 5, 5, 5, 5, 5, 4, 4, 4, 3, 2, 1]
+                if target - ai_total <= 6:
+                    ai_roll = target - ai_total
+                else:
+                    ai_roll = random.choice(biased)
+            else:
+                ai_roll = roll_dice(total, ai_total)
+            ai_total += ai_roll
+            # AI bust logic
+            if ai_total > target:
+                clear()
+                print(f"Bust! AI rolled a {ai_roll} and went over {target}!")
+                input("\nPress enter to continue.")
+                break
+            print(f"AI rolled a {ai_roll}!\n")
+            print(f"TARGET: {target}\nYOUR TOTAL: {total}\nAI'S TOTAL: {ai_total}")
+            input("\nPress enter to continue.")
+            
+            if player_with == True:
+                break
+            
+        # AI withdraw logic    
+        else:
+            print(f"\nAI withdrew! Their final score was {ai_total}!")
+            if player_with != True:
+                print("You get another turn!")
+            input("\nPress enter to continue.")
+            ai_with = True
+    
+    # Determine the winner
+    player_difference = abs(target - total)
+    ai_difference = abs(target - ai_total)
+
+    clear()
+    print("FINAL SCORES:")
+    print(f"PLAYER'S TOTAL: {total}")
+    print(f"AI'S TOTAL: {ai_total}")
+
+    if total > target and ai_total <= target:
+        print("Bust! You lose!")
+    elif ai_total > target and total <= target:
+        print("AI busts! You win!")
+    elif player_difference < ai_difference:
+        print("Congratulations! You win!")
+    elif player_difference > ai_difference:
+        print("AI wins! Better luck next time.")
+    else:
+        print("It's a tie!")
+    
+    # Restarting the game
+    while True:
+        restart = input("\nPlay again? (y/n) ").lower()
+        if restart == "y":
+            clear()
+            main()
+        elif restart == "n":
+            clear()
+            quit()
+        else:
+            print("\nBAD INPUT!")
+
+# Start of the game, only happens once
+def start():
+    global hyper
+    print("Welcome! Heres how to play:")
+    print("- You are playing against an AI, rolling 6 sided die to get as close to a target total as possible without going over (busting)!")
+    print("- Every turn you can choose to roll another dice or withdraw, and accept your final score.")
+    print("- Whenever you or the AI withdraws, the other person gets one more turn!")
+    print("- Whoever has the higher total or makes the opponent bust wins!")
+    while True:
+        play = input("\nReady to play? (y/n) ").lower()
+        if play == "y":
+            clear()
+            main()
+        elif play == "n":
+            clear()
+            quit()
+        elif play == "aggro":
+            hyper = True
+            main()
+        else:
+            print("\nBAD INPUT!")
+
+start()
