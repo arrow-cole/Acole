@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Info</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>My Info</h1>
+
+    <section>
+        <h2>Personal Details</h2>
+        <p><strong>Name:</strong> Aaron Cole</p>
+        <p><strong>Perferred Name:</strong> Arrow or Aro</p>
+        <p><strong>Email:</strong> Arrow@acole.xyz</p>
+        <p><strong>Phone Number:</strong> (616) 498-8680</p>
+        <p><strong>Location:</strong> Grand Rapids, Michigan</p>
+    </section>
+
+    <section>
+        <h2>Education</h2>
+        <p><strong>School:</strong> Northview High School</p>
+        <p><strong>Graduation Year:</strong> 2026</p>
+    </section>
+
+    <section>
+        <h2>Skills</h2>
+        <ul>
+            <li> Coding </li>
+            <li> Graphic Design </li>
+            <li> Website Desgin </li>
+            <!-- Add more skills as needed -->
+        </ul>
+    </section>
+
+
+</body>
+</html>
