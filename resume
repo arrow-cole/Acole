@@ -27,7 +27,7 @@
 <body>
 
     <header>
-        <h1>Your Name</h1>
+        <h1>Aaron Cole</h1>
         <p>Web Developer</p>
     </header>
 
@@ -36,7 +36,7 @@
         <ul>
             <li>Email: resume@acole.xyz</li>
             <li>Phone: (616) 498-8680</li>
-            <li>LinkedIn: linkedin.com/in/yourname</li>
+            <li>LinkedIn: linkedin.com/in/arrow-cole-728b79267</li>
             <li>GitHub: github.com/arrow-cole</li>
         </ul>
     </section>
@@ -44,30 +44,29 @@
     <section>
         <h2>Skills</h2>
         <ul>
-            <li>HTML5, CSS3, JavaScript</li>
-            <li>Responsive Web Design</li>
-            <li>Front-end Frameworks (e.g., Bootstrap)</li>
-            <li>Version Control (e.g., Git)</li>
-            <li>Web Accessibility</li>
+            <li>Web Design</li>
+            <li>Graphic Design</li>
+            <li>Lawn Care</li>
+            <li>Computer Skills</li>
+            <li>Cash Handling</li>
+            <li>Customer Service</li>
+            <li>Mowing</li>
+            <li>Busser</li>
+            <li>Cashiering</li>
+
         </ul>
     </section>
 
     <section>
         <h2>Experience</h2>
-        <h3>Job Title, Company, Dates</h3>
-        <p>Responsibilities and achievements at this position.</p>
+        <h3>Busser, New Beginnings Restuarants, October 2021 - December 2021</li>
 
-        <h3>Job Title, Company, Dates</h3>
-        <p>Responsibilities and achievements at this position.</p>
-    </section>
+        <h3>Arcade Specialist, Westgate Bowl, July 2021 - Present</h3>
 
-    <section>
-        <h2>Projects</h2>
-        <h3>Project Name, Dates</h3>
-        <p>Description of the project and your role.</p>
+        <h3>Snack Bar Cashier, Westgate Bowl, January 2022 - Present</h3>
 
-        <h3>Project Name, Dates</h3>
-        <p>Description of the project and your role.</p>
+        <h3>Team member, Skyzone, September 2022 - March 2023</h3>
+        
     </section>
 
     <footer>
