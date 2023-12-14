@@ -42,7 +42,7 @@
 
     <script>
         // Array of words to guess
-        const words = ['one', 'two', 'three', 'four', 'five'];
+        const words = ['Gay', 'the', 'bitch', 'face', 'fuck', 'dick'];
 
         // Select a random word
         const wordToGuess = words[Math.floor(Math.random() * words.length)];
