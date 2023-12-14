@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Message Generator</title>
+</head>
+<body>
+
+ <section>
+     <h2>50/50 Chance of getting HI or getting STFU</h2>
+     <p>this is not suppost to be offensive</p>
+<h1 id="response"></h1>
+<button onclick="generateAndDisplay()">Refresh</button>
+
+<script>
+    function generateResponse() {
+        // Set the probability of saying "STFU" to 50/50
+        const chanceOfSTFU = 0.5;
+
+        // Generate a random number between 0 and 1
+        const randomNumber = Math.random();
+
+        // Check if the random number falls within the desired probability range
+        if (randomNumber < chanceOfSTFU) {
+            return "STFU";
+        } else {
+            // Return "Hi" for the remaining 50% of the time
+            return "Hi";
+        }
+    }
+
+    function generateAndDisplay() {
+        // Example usage
+        const response = generateResponse();
+
+        // Display the response on the web page
+        document.getElementById("response").innerHTML = response;
+    }
+
+    // Initial display on page load
+    generateAndDisplay();
+</script>
+
+</body>
+</html>
