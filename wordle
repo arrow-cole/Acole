@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        #wordToGuess {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        #guessInput {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        #submitBtn {
+            font-size: 16px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Wordle Game</h1>
+
+    <div id="wordToGuess"></div>
+    <input type="text" id="guessInput" maxlength="6">
+    <button onclick="submitGuess()" id="submitBtn">Submit Guess</button>
+    <div id="result"></div>
+
+    <script>
+        // Array of words to guess
+        const words = ['one', 'two', 'three', 'four', 'five'];
+
+        // Select a random word
+        const wordToGuess = words[Math.floor(Math.random() * words.length)];
+
+        // Display the word to guess (for testing purposes)
+        document.getElementById('wordToGuess').innerText = `Word to Guess: ${wordToGuess}`;
+
+        // Initialize the guessed word array with underscores
+        let guessedWord = Array(wordToGuess.length).fill('_');
+
+        // Function to display the guessed word
+        function displayGuessedWord() {
+            document.getElementById('wordToGuess').innerText = guessedWord.join(' ');
+        }
+
+        // Function to submit a guess
+        function submitGuess() {
+            const guessInput = document.getElementById('guessInput').value.toLowerCase();
+
+            if (guessInput.length === 1) {
+                // Single-letter guess
+                if (wordToGuess.includes(guessInput)) {
+                    // Update the guessed word with the correct guess
+                    for (let i = 0; i < wordToGuess.length; i++) {
+                        if (wordToGuess[i] === guessInput) {
+                            guessedWord[i] = guessInput;
+                        }
+                    }
+                }
+
+                // Check if the word is completely guessed
+                if (!guessedWord.includes('_')) {
+                    document.getElementById('result').innerText = 'Congratulations! You guessed the word!';
+                }
+            } else if (guessInput.length === wordToGuess.length && guessInput === wordToGuess) {
+                // Full-word guess
+                guessedWord = wordToGuess.split('');
+                document.getElementById('result').innerText = 'Congratulations! You guessed the word!';
+            } else {
+                document.getElementById('result').innerText = 'Incorrect guess. Try again.';
+            }
+
+            // Display the updated guessed word
+            displayGuessedWord();
+
+            // Clear the input field
+            document.getElementById('guessInput').value = '';
+        }
+
+        // Display the initial guessed word
+        displayGuessedWord();
+    </script>
+</body>
+</html>
